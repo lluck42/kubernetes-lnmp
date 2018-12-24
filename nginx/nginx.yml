@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-php
+  labels:
+    app: lnmp
+spec:
+  containers:
+  - name: php-fpm
+    image: registry.cn-hangzhou.aliyuncs.com/lluck42/php-fpm:latest
+    ports:
+    - containerPort: 9000
+    volumeMounts:
+    - mountPath: /var/www/html/
+      name: html
+  volumes:
+    - name: html
+      hostPath:
+        path: /f/kubenetes/nginx/html
+    - name: nginx-conf
+      hostPath:
+        path: /f/kubenetes/nginx/conf

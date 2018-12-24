@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lnmp
+  labels:
+    name: lnmp
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: lnmp1
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: html
+        - mountPath: /etc/nginx/conf.d
+          name: nginx-conf
+      - name: php-fpm
+        image: registry.cn-hangzhou.aliyuncs.com/lluck42/php-fpm:latest
+        ports:
+        - containerPort: 9000
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: html
+      - name: mysql
+        image: mysql:5.6
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-data
+      volumes:
+        - name: html
+          hostPath:
+            path: /f/kubenetes/nginx/html
+        - name: nginx-conf
+          hostPath:
+            path: /f/kubenetes/nginx/conf
+        - name: mysql-data
+          hostPath:
+            path: /f/kubenetes/mysql/data
