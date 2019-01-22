@@ -14,4 +14,4 @@ spec:
     port: 3306
     nodePort: 30306
   selector:
-    app: web         #这里选择器一定要选择容器的标签，之前写name:kube-node是错的。
+    app: lnmp-pod-label         #这里选择器一定要选择容器的标签，之前写name:kube-node是错的。

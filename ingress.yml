@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+spec:
+  rules:
+  - host: localhost
+    ports: 80
+    http:
+      paths:
+      - backend:
+          serviceName: lnmp 
+          servicePort: 80
